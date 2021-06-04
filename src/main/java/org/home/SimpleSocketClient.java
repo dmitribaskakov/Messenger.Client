@@ -15,6 +15,8 @@ public class SimpleSocketClient {
         Socket socket = null;
         try {
             socket = new Socket(HOST, PORT);
+            System.out.println("Client address " + socket.getLocalSocketAddress());
+            System.out.println("Connect to Server address " + socket.getRemoteSocketAddress());
 
             try (InputStream in = socket.getInputStream();
                  OutputStream out = socket.getOutputStream()) {
