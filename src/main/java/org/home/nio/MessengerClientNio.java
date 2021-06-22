@@ -10,6 +10,9 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.Scanner;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import static java.nio.ByteBuffer.allocate;
 import static java.nio.channels.SelectionKey.OP_ACCEPT;
@@ -25,11 +28,30 @@ public class MessengerClientNio {
     public void start(String ServerAddress, int ServerPort) throws IOException {
         serverAddress = new InetSocketAddress(ServerAddress, ServerPort);
         readBuffer = allocate(8192);
-        selector = Selector.open();
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.configureBlocking(false);
+        selector = Selector.open();
         socketChannel.register(selector, OP_CONNECT);
         socketChannel.connect(serverAddress);
+        BlockingQueue<String> queue = new ArrayBlockingQueue<>(2);
 
+        // создаем отдельный поток на чтение ввода с клавиатуры
+        new Thread(() -> {
+            System.out.println("Press you message or \\q for exit:");
+            Scanner scanner = new Scanner(System.in);
+            while (true) {
+                String line = scanner.nextLine();
+                if ("\\q".equals(line)) {
+                    System.exit(0);
+                }
+                try {
+                    queue.put(line);
+                } catch (InterruptedException e) {
+                    //e.printStackTrace();
+                    System.out.println("MessengerClientNio.run: queue be notified");
+                }
+
+            }
+        });
     }
 }
