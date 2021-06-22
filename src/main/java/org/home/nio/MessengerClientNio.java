@@ -15,8 +15,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 import static java.nio.ByteBuffer.allocate;
-import static java.nio.channels.SelectionKey.OP_ACCEPT;
-import static java.nio.channels.SelectionKey.OP_CONNECT;
+import static java.nio.channels.SelectionKey.*;
+import static java.nio.channels.SelectionKey.OP_READ;
 
 public class MessengerClientNio {
     private InetSocketAddress serverAddress;
@@ -50,8 +50,32 @@ public class MessengerClientNio {
                     //e.printStackTrace();
                     System.out.println("MessengerClientNio.run: queue be notified");
                 }
-
+                SelectionKey key = socketChannel.keyFor(selector);
+                key.interestOps(OP_WRITE);
+                selector.wakeup();
             }
-        });
+        }).start();
+
+        // в текущем потоке обмен сообщениями с сервером
+        while (true) {
+            selector.select();
+            for (SelectionKey selectionKey : selector.selectedKeys()) {
+                if (selectionKey.isConnectable()) {
+                    socketChannel.finishConnect();
+                    selectionKey.interestOps(OP_WRITE);
+                    System.out.println("[Connected to server]");
+                } else if (selectionKey.isReadable()) {
+                    readBuffer.clear();
+                    socketChannel.read(readBuffer);
+                    System.out.println("[Received = '" + new String(readBuffer.array())+"']");
+                } else if (selectionKey.isWritable()) {
+                    String line = queue.poll();
+                    if (line != null) {
+                        socketChannel.write(ByteBuffer.wrap(line.getBytes()));
+                    }
+                    selectionKey.interestOps(OP_READ);
+                }
+            }
+        }
     }
 }
