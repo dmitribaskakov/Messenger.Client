@@ -47,8 +47,8 @@ public class MessengerClientNio {
                 try {
                     queue.put(line);
                 } catch (InterruptedException e) {
-                    //e.printStackTrace();
-                    System.out.println("MessengerClientNio.run: queue be notified");
+                    e.printStackTrace();
+                    //System.out.println("MessengerClientNio.run: queue be notified");
                 }
                 SelectionKey key = socketChannel.keyFor(selector);
                 key.interestOps(OP_WRITE);
