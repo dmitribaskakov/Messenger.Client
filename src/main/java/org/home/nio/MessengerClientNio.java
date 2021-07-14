@@ -25,7 +25,7 @@ public class MessengerClientNio {
     private ByteBuffer readBuffer;
     BlockingQueue<String> queue;
 
-    static Logger log = LoggerFactory.getLogger(MessengerClientNio.class);
+    //static Logger log = LoggerFactory.getLogger(MessengerClientNio.class);
 
     public void start(String ServerAddress, int ServerPort) throws IOException {
         readBuffer = allocate(8192);

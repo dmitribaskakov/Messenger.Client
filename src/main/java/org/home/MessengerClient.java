@@ -1,19 +1,21 @@
 package org.home;
 
 import org.home.nio.MessengerClientNio;
-import org.home.socket.SimpleSocketClient;
 
 public class MessengerClient {
 
+    //static Logger log = LoggerFactory.getLogger(MessengerClient.class);
+
     public static void main(String... args) throws Exception {
+
+        SettingsManager settingsManager = new SettingsManager();
+        Settings settings = settingsManager.load();
         System.out.println("MessengerClient: started");
-        final int PORT = 19000;
-        final String ADDRESS = "localhost";
 
         //SimpleSocketClient.test();
 
         MessengerClientNio client = new MessengerClientNio();
-        client.start(ADDRESS, PORT);
+        client.start(settings.getServerAddress(), settings.getServerPort());
 
         System.out.println("MessengerClient: finished");
     }
