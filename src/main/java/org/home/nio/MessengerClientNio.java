@@ -27,7 +27,7 @@ public class MessengerClientNio {
 
     //static Logger log = LoggerFactory.getLogger(MessengerClientNio.class);
 
-    public void start(String ServerAddress, int ServerPort) throws IOException {
+    public void start(String ServerAddress, int ServerPort, String login) throws IOException {
         readBuffer = allocate(8192);
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.configureBlocking(false);

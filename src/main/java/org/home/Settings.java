@@ -1,5 +1,7 @@
 package org.home;
 
+import java.util.Scanner;
+
 public class Settings {
     final int DefaultServerPort = 19000;
     final String DefaultServerAddress = "localhost";
@@ -20,7 +22,11 @@ public class Settings {
 
     public String getLogin() {
         if (login.isEmpty()) {
-
+            System.out.println("Login:");
+            Scanner scanner = new Scanner(System.in);
+            String line = scanner.nextLine();
+            if ("\\q".equals(line)) System.exit(0);
+            login = line;
         };
         return login;
     }

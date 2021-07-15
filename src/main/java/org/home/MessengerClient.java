@@ -15,7 +15,7 @@ public class MessengerClient {
         //SimpleSocketClient.test();
 
         MessengerClientNio client = new MessengerClientNio();
-        client.start(settings.getServerAddress(), settings.getServerPort());
+        client.start(settings.getServerAddress(), settings.getServerPort(), settings.getLogin());
 
         System.out.println("MessengerClient: finished");
     }
