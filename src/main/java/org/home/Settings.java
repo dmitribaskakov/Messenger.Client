@@ -4,8 +4,9 @@ public class Settings {
     final int DefaultServerPort = 19000;
     final String DefaultServerAddress = "localhost";
 
-    private int ServerPort;
-    private String ServerAddress;
+    private int ServerPort = DefaultServerPort;
+    private String ServerAddress = DefaultServerAddress;
+    private String login = "";
 
     public int getServerPort() {
         if (ServerPort == 0) ServerPort = DefaultServerPort;
@@ -17,4 +18,10 @@ public class Settings {
         return ServerAddress;
     }
 
+    public String getLogin() {
+        if (login.isEmpty()) {
+
+        };
+        return login;
+    }
 }

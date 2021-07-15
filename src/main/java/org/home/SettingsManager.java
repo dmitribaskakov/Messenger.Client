@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SettingsManager {
-    final String filePathSettings = "Settings.json";
+    final private String filePathSettings = "Settings.json";
 
     public Settings load() {
         Settings settings;
@@ -17,7 +17,7 @@ public class SettingsManager {
             String content = lines.collect(Collectors.joining());
             settings = JSON.parseObject(content, Settings.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            //java.nio.file.NoSuchFileException
             settings = new Settings();
             save(settings);
         }
