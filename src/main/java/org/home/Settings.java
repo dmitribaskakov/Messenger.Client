@@ -1,27 +1,38 @@
 package org.home;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Scanner;
 
 public class Settings {
-    final int DefaultServerPort = 19000;
-    final String DefaultServerAddress = "localhost";
+    final private int DefaultServerPort = 1900;
+    final private String DefaultServerAddress = "localhostxxxx";
 
-    private int ServerPort = DefaultServerPort;
-    private String ServerAddress = DefaultServerAddress;
-    private String login = "";
+    @JSONField(name = "ServerAddress")
+    private String serverAddress;
 
-    public int getServerPort() {
-        if (ServerPort == 0) ServerPort = DefaultServerPort;
-        return ServerPort;
-    }
+    @JSONField(name = "ServerPort")
+    private int serverPort;
+
+    @JSONField(name = "Login")
+    private String login;
 
     public String getServerAddress() {
-        if (ServerAddress.isEmpty()) ServerAddress = DefaultServerAddress;
-        return ServerAddress;
+        if ((serverAddress==null) | ((serverAddress!=null) & (serverAddress.isEmpty()))) {
+            serverAddress = DefaultServerAddress;
+        };
+        return serverAddress;
+    }
+
+    public int getServerPort() {
+        if (serverPort == 0) {
+            serverPort = DefaultServerPort;
+        }
+        return serverPort;
     }
 
     public String getLogin() {
-        if (login.isEmpty()) {
+        if ((login==null) | ((login!=null) & (login.isEmpty()))) {
             System.out.println("Login:");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
