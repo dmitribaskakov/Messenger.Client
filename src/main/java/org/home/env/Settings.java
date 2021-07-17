@@ -9,10 +9,10 @@ public class Settings {
     final private String DefaultServerAddress = "localhost";
 
     @JSONField(name = "ServerAddress")
-    private String serverAddress;
+    private String serverAddress = DefaultServerAddress;
 
     @JSONField(name = "ServerPort")
-    private int serverPort = 0;
+    private int serverPort = DefaultServerPort;
 
     @JSONField(name = "Login")
     private String login;
