@@ -1,5 +1,6 @@
 package org.home.nio;
 
+import org.home.env.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +28,15 @@ public class MessengerClientNio {
 
     //static Logger log = LoggerFactory.getLogger(MessengerClientNio.class);
 
-    public void start(String ServerAddress, int ServerPort, String login) throws IOException {
+    public void start(Settings settings) throws IOException {
         readBuffer = allocate(8192);
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.configureBlocking(false);
         selector = Selector.open();
         socketChannel.register(selector, OP_CONNECT);
-        socketChannel.connect(new InetSocketAddress(ServerAddress, ServerPort));
+        socketChannel.connect(new InetSocketAddress(settings.getServerAddress(), settings.getServerPort()));
         queue = new ArrayBlockingQueue<>(2);
+        String login = settings.getLogin();
 
         // создаем отдельный поток на чтение ввода с клавиатуры
         new Thread(() -> {

@@ -1,4 +1,4 @@
-package org.home;
+package org.home.env;
 
 import com.alibaba.fastjson.JSON;
 
