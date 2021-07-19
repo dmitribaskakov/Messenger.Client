@@ -2,7 +2,13 @@ package org.home;
 
 import org.home.env.Settings;
 import org.home.env.SettingsManager;
+import org.home.nio.Message;
 import org.home.nio.MessengerClientNio;
+
+import java.nio.channels.SelectionKey;
+import java.util.Scanner;
+
+import static java.nio.channels.SelectionKey.OP_WRITE;
 
 public class MessengerClient {
 

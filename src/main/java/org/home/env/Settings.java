@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import java.util.Scanner;
 
 public class Settings {
-    final private int DefaultServerPort = 1900;
+    final private int DefaultServerPort = 19000;
     final private String DefaultServerAddress = "localhost";
 
     @JSONField(name = "ServerAddress")
